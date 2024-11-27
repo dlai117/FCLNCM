@@ -3,7 +3,7 @@
 %%
 clear; clc;
 %% 
-m = 2; % m = 2
+m = 2; % The default value of m is 2
 delta = 0.15;
 max_iter = 100;
 min_impro = 1e-5;
@@ -11,10 +11,10 @@ min_impro = 1e-5;
 Re = [];elapsedTime = [];
 alpha_list = [-10,-8,-6,-4,-2,2,4,6,8,10];
 for i = 1:10
-for ALPHA = 1:1:1                % ALPHA -> {1,2,3...,8,9,10}
-    for beta = 0:0.1:0.9 % beta -> {0.1,0.2,...,0.8,0.9}
-        for w1 = 0:0.1:1          % w1 -> {0.01,0.02,...,0.49,0.5}
-            for w2 = 0:0.1:1  % w2 -> {0.4,0.41,...,0.97,0.98}
+for ALPHA = 1:1:10                % ALPHA -> {1,2,3...,8,9,10}
+    for beta = 0.1:0.1:0.9 % beta -> {0.1,0.2,...,0.8,0.9}
+        for w1 = 0.01:0.1:0.5          % w1 -> {0.01,0.02,...,0.49,0.5}
+            for w2 = 0.4:0.1:0.98  % w2 -> {0.4,0.41,...,0.97,0.98}
                 w3 = 1-w1-w2;
                 alpha = alpha_list(ALPHA);
               
@@ -47,9 +47,6 @@ for ALPHA = 1:1:1                % ALPHA -> {1,2,3...,8,9,10}
                         I = I./col_sum;
                         F = F./col_sum;
                         T = T'; I = I'; F = F';
-%                         z = repmat(1/C,1,C);
-%                         w = repmat(1/size(X,2),1,size(X,2));
-%                         zimax = repmat(1/size(X,1),1,size(X,1));
                         %-------------------- Iteration ------------------%
                         [T,I,F,re] =  FCLNCM_func(m,delta,max_iter,min_impro,alpha,beta,w1,w2,w3,X,N,S,C,V,T);
                         
@@ -70,7 +67,6 @@ for ALPHA = 1:1:1                % ALPHA -> {1,2,3...,8,9,10}
 
 %                         V(A2, :) = V;
 %                         U1 = U(A2, :);
-
                         err = 0; ERR=[];
                         for j = 1:length(label_1)
                             if new_label(j) ~= label_1(j)
