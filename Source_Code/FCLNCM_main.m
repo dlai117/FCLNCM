@@ -13,13 +13,13 @@ alpha_list = [-10,-8,-6,-4,-2,2,4,6,8,10];
 for i = 1:10
 for ALPHA = 1:1:10                % ALPHA -> {1,2,3...,8,9,10}
     for beta = 0.1:0.1:0.9 % beta -> {0.1,0.2,...,0.8,0.9}
-        for w1 = 0.01:0.1:0.5          % w1 -> {0.01,0.02,...,0.49,0.5}
-            for w2 = 0.4:0.1:0.98  % w2 -> {0.4,0.41,...,0.97,0.98}
+        for w1 = 0.01:0.01:0.5          % w1 -> {0.01,0.02,...,0.49,0.5}
+            for w2 = 0.4:0.01:0.98  % w2 -> {0.4,0.41,...,0.97,0.98}
                 w3 = 1-w1-w2;
                 alpha = alpha_list(ALPHA);
               
                 if w3 > 0
-%                     try
+                    try
                         X = dlmread('West-2001.txt');
                         Y = X(:,end);
                               
@@ -28,12 +28,9 @@ for ALPHA = 1:1:10                % ALPHA -> {1,2,3...,8,9,10}
                         N = size(X, 1);
                         S = size(X, 2);
                         X=(X-ones(N,1)*min(X))./(ones(N,1)*(max(X)-min(X)));    
-%                         Y(Y==1) = 2;Y(Y==-1) = 1;
                      
                         [V, U] = fcm(X, C);
                         
-%                         mf = (w1*T).^m;
-%                         V = mf*X./(sum(mf, 2)*ones(1, M));
                         
                         [~, O] = max(U);
                         [~, A1] = label_map(O, Y);
@@ -55,9 +52,8 @@ for ALPHA = 1:1:10                % ALPHA -> {1,2,3...,8,9,10}
                         [max_matrix, I1] = max(matrix);
                         index4 = find(matrix(C+1,:) == max_matrix);
                         index5 = find(matrix(C+2,:) == max_matrix);
-% 
+ 
                         I1 = I1';
-%                         I1 = [I1 linspace(1,2100,2100)'];
                         index = [index4 index5];
                         label_1 = Y;
                         label_2 = Y;
@@ -65,13 +61,10 @@ for ALPHA = 1:1:10                % ALPHA -> {1,2,3...,8,9,10}
                         label_1(index, :) = [];
                         [new_label, A2] = label_map(I1, label_1);
 
-%                         V(A2, :) = V;
-%                         U1 = U(A2, :);
                         err = 0; ERR=[];
                         for j = 1:length(label_1)
                             if new_label(j) ~= label_1(j)
                                 err = err + 1;
-%                                  ERR = [ERR I1(j,2)];
                                  ERR = [ERR j];
                             end
                         end
@@ -91,10 +84,9 @@ for ALPHA = 1:1:10                % ALPHA -> {1,2,3...,8,9,10}
                         [P,R,F1,RI,FM,J] = Evaluate(label_2,New_label);
                         Re = [Re;[alpha,beta,w1,w2,w3,Acc,Aimpre,Aoutlier,nmi,P,R,F1,RI,FM,J]];
                          fprintf("ACC:%f,IMP:%f,OUT:%f,NMI:%f,P:%f,R:%f,F:%f,RI:%f,FM:%f,J:%f\n",Acc,Aimpre,Aoutlier,nmi,P,R,F1,RI,FM,J);
-%                          fprintf("ERR:%f\n",Aerror);
-%                     catch
-%                         disp("Error");
-%                     end
+                    catch
+                        disp("Error");
+                    end
                 end
             end
         end
