@@ -3,17 +3,17 @@
 %%
 clear; clc;
 %% 
-m = 2; % The default value of m is 2
-delta = 0.15;
+m = 2;        % The default value of m is 2
+delta = 0.01; % delta -> {0.01,0.1,1,10,100}
 max_iter = 100;
 min_impro = 1e-5;
-% 
+ 
 Re = [];elapsedTime = [];
 alpha_list = [-10,-8,-6,-4,-2,2,4,6,8,10];
 for i = 1:10
-for ALPHA = 1:1:10                % ALPHA -> {1,2,3...,8,9,10}
-    for beta = 0.1:0.1:0.9 % beta -> {0.1,0.2,...,0.8,0.9}
-        for w1 = 0.01:0.01:0.98          % w1 -> {0.01,0.02,...,0.97,0.98}
+for ALPHA = 1:1:10                   % ALPHA -> {1,2,3...,8,9,10}
+    for beta = 0.1:0.1:0.9           % beta -> {0.1,0.2,...,0.8,0.9}
+        for w1 = 0.01:0.01:0.98      % w1 -> {0.01,0.02,...,0.97,0.98}
             for w2 = 0.01:0.01:0.98  % w2 -> {0.01,0.02,...,0.97,0.98}
                 w3 = 1-w1-w2;
                 alpha = alpha_list(ALPHA);
@@ -71,7 +71,6 @@ for ALPHA = 1:1:10                % ALPHA -> {1,2,3...,8,9,10}
                         Aerror = err/size(X, 1);
                         Aimpre = length(index4)/size(X, 1);
                         Aoutlier = length(index5)/size(X, 1);
-% 
                         TT = T;
                         for tmp14 = 1:length(index4)
                             TT(index4(tmp14),re(index4(tmp14), :)) = TT(index4(tmp14),re(index4(tmp14), :))+I(index4(tmp14))/2;
