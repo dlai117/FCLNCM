@@ -4,7 +4,7 @@
 clear; clc;
 %% 
 m = 2;        % The default value of m is 2
-delta = 0.01; % delta -> {0.01,0.1,1,10,100}
+delta = 100;  % delta -> {0.01,0.1,1,10,100}
 max_iter = 100;
 min_impro = 1e-5;
  
